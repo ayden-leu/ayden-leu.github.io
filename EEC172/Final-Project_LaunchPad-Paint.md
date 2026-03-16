@@ -70,7 +70,7 @@ The system consists of three major components: the embedded drawing device, clou
 5. When the user saves the drawing, the device uploads the image to AWS S3.
 6. A Lambda function processes the upload and sends the image to the user via email.
 
-![System Architecture Diagram](./system_architecture_diagram_final.png "a title")
+<img src="./system_architecture_diagram_final.png" width="70%" alt="System Architecture Diagram">
 ---
 # Functional Specification
 
@@ -83,7 +83,8 @@ The functional specification describes the workflow of the drawing system, inclu
 5. The system updates the cursor position, drawing tool, color, or canvas state, and then re-renders the canvas and cursor on the OLED display.
 6. If the save function is triggered, the canvas buffer is converted to image data and uploaded to cloud storage using a pre-signed URL obtained from AWS.
 7. 
-![Functional Specifiication Diagram](./functional_specification_diagram_final.png "a title")
+
+<img src="./functional_specification_diagram_final.png" width="70%" alt="System Architecture Diagram">
 ---
 
 
