@@ -144,11 +144,11 @@ Button Mappings:
 
 This part describes how the system uploads the generated drawing to cloud storage and sends the saved image to the user through email. The process uses AWS API Gateway, AWS Lambda, Amazon S3, and Amazon SES.
 
-#### Step 1: Prepare the Image Data
+### Step 1: Prepare the Image Data
 
 When the user triggers the save function, the drawing stored in the device's framebuffer is converted into a `.bmp` image file. This image data will later be uploaded to cloud storage.
 
-#### Step 2: Connect to AWS API Gateway
+### Step 2: Connect to AWS API Gateway
 
 The device must establish a secure connection with AWS in order to request permission to upload the image.
 
@@ -157,7 +157,7 @@ The device must establish a secure connection with AWS in order to request permi
 2. Open a TLS connection to this server using port **443**, the standard HTTPS port.
 3. Once the secure connection is established, the device can communicate with the Lambda service through API Gateway.
 
-#### Step 3: Request a Pre-signed Upload URL
+### Step 3: Request a Pre-signed Upload URL
 
 Instead of directly uploading files with AWS credentials, the system requests a **pre-signed upload URL** from a Lambda function.
 
@@ -167,7 +167,7 @@ Instead of directly uploading files with AWS credentials, the system requests a 
    - the **pre-signed upload URL**
    - the **file key** that will identify the stored image.
 
-#### Step 4: Extract the Upload URL
+### Step 4: Extract the Upload URL
 
 After receiving the server response:
 
@@ -175,7 +175,7 @@ After receiving the server response:
 2. The program extracts the **upload URL** from the response.
 3. This URL will be used as the destination for the image upload.
 
-#### Step 5: Upload the Image to Amazon S3
+### Step 5: Upload the Image to Amazon S3
 
 Using the pre-signed URL, the device uploads the generated BMP image to the S3 bucket.
 
@@ -186,7 +186,7 @@ Using the pre-signed URL, the device uploads the generated BMP image to the S3 b
 4. Include the BMP image data as the payload of the request.
 5. After the request completes successfully, the image is stored in the S3 bucket.
 
-#### Step 6: Trigger an S3 Event
+### Step 6: Trigger an S3 Event
 
 Once the image is uploaded:
 
@@ -194,7 +194,7 @@ Once the image is uploaded:
 2. When a new object is uploaded to the bucket, the bucket automatically emits an event.
 3. This event triggers a second AWS Lambda function that handles post-processing.
 
-#### Step 7: Process the Uploaded Image
+### Step 7: Process the Uploaded Image
 
 The triggered Lambda function performs the following tasks:
 
@@ -204,7 +204,7 @@ The triggered Lambda function performs the following tasks:
 2. Retrieve the uploaded image file from the S3 bucket.
 3. Convert the file into a usable data buffer.
 
-#### Step 8: Send the Image by Email
+### Step 8: Send the Image by Email
 
 The Lambda function then sends the uploaded image to the user through Amazon SES.
 
