@@ -6,7 +6,7 @@
   - [Hardware Requirements](#hardware-requirements)
   - [Software Requirements](#software-requirements)
 - [System Architecture](#system-architecture)
-- [Functional Specification](#Functional Specification)
+- [Functional Specification](#functional-specification)
 - [Part I: Drawing Implementation](#part-i--drawing-implementation)
 - [Part II: User Interface](#part-ii--user-interface)
 - [Part III: Save Image to Cloud Storage](#part-iii--save-image-to-cloud-storage)
