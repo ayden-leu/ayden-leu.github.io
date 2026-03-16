@@ -70,8 +70,8 @@ The system consists of three major components: the embedded drawing device, clou
 5. When the user saves the drawing, the device uploads the image to AWS S3.
 6. A Lambda function processes the upload and sends the image to the user via email.
 
-<img src="./system_architecture_diagram_final.png" width="70%" alt="System Architecture Diagram">
----
+<img src="./system_architecture_diagram_final.png" width="60%" alt="System Architecture Diagram">
+
 # Functional Specification
 
 The functional specification describes the workflow of the drawing system, including initialization, user interaction, drawing operations, and cloud image upload.
@@ -85,9 +85,6 @@ The functional specification describes the workflow of the drawing system, inclu
 7. 
 
 <img src="./functional_specification_diagram_final.png" width="70%" alt="System Architecture Diagram">
----
-
-
 
 # Part I: Drawing Implementation
 
