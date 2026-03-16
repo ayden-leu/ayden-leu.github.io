@@ -88,20 +88,35 @@ The functional specification describes the workflow of the drawing system, inclu
 
 # Part I: Drawing Implementation
 
-The drawing system maintains a framebuffer representing the canvas. Each pixel is stored in RGB565 format and rendered to the OLED display.
+The drawing system is responsible for managing the canvas, processing user input, and rendering graphical elements on the OLED display. The implementation focuses on maintaining a consistent drawing state and updating the screen based on user actions.
 
-Supported drawing operations include:
+### Framebuffer and Canvas Management
 
-- Cursor movement
-- Pixel drawing
-- Line drawing
-- Rectangle drawing
-- Ellipse drawing
-- Bucket fill
+The drawing canvas is represented by a framebuffer stored in memory. Each element of the framebuffer corresponds to a pixel on the OLED display. All drawing operations modify this buffer first before the updated image is rendered on the screen. This design allows the system to keep track of the entire drawing state and refresh the display efficiently.
 
-Each drawing operation updates the framebuffer and then refreshes the OLED display.
+### Cursor Movement
 
+A cursor is used to indicate the current drawing position on the canvas. The cursor can move in four directions based on user input from the remote controller. Boundary checks ensure that the cursor remains within the canvas area. The cursor is visually displayed on the screen to help users position their drawings accurately.
 
+### Basic Drawing Operations
+
+The system supports drawing individual pixels using a pencil tool. When the user activates the drawing action, the pixel at the cursor position is updated with the currently selected color. The eraser tool works similarly but replaces the pixel color with the background color. These operations allow users to manually create or modify drawings on the canvas.
+
+### Canvas Control
+
+Users can reset the entire canvas when needed. The clear function removes all drawing content by resetting every pixel in the framebuffer to the background color. The updated blank canvas is then rendered to the display.
+
+### Color and Tool Selection
+
+The drawing system supports multiple colors and tools that users can switch between during operation. The available tools include pencil, eraser, line, rectangle, ellipse, and bucket fill. Switching tools changes how input actions are interpreted by the system.
+
+### Shape Drawing
+
+For geometric shapes such as lines, rectangles, and ellipses, the user selects two points on the canvas. The first point defines the starting position, and the second point defines the ending position or bounding region. The system then generates the corresponding shape between the two points.
+
+### Bucket Fill
+
+The bucket fill tool allows users to quickly color a connected region of the canvas. When activated, the system replaces neighboring pixels that share the same base color with the selected drawing color, producing a flood-fill effect similar to standard paint applications.
 
 
 # Part II: User Interface
@@ -131,9 +146,9 @@ This system allows the user to save the generated drawing to the cloud and autom
 
 #### Step 1: Request a Pre-Signed Upload URL
 
-When the user selects the save function, the CC3200 first prepares the canvas image for upload by converting the framebuffer into a `.bmp` image.
+When the user selects the save function, the CC3200 first prepares the canvas image for upload by converting the framebuffer into a `.bmp` image. 
 
-The device then establishes a secure TLS connection to the AWS API Gateway endpoint using HTTPS (port 443). After the connection is created, the device sends an HTTP **GET request** to a Lambda function through the API Gateway. The Lambda function generates a **pre-signed URL** that allows the device to upload a file directly to the S3 bucket without exposing credentials.
+The device then establishes a secure TLS connection to the AWS API Gateway endpoint using HTTPS (port 443). After the connection is created, the device sends an HTTP **GET request** to a Lambda function through the API Gateway. The Lambda function generates a **pre-signed URL** that allows the device to upload a file directly to the S3 bucket without exposing credentials. 
 
 Once the Lambda function returns the response, the device extracts the upload URL from the JSON response.
 
@@ -167,7 +182,7 @@ The downloaded image data is converted into a binary buffer so it can be attache
 
 #### Step 5: Send Image to the User via Email
 
-The final step uses **Amazon SES (Simple Email Service)** to send the drawing image to the user.
+Uses **Amazon SES (Simple Email Service)** to send the drawing image to the user.
 
 The Lambda function constructs a raw MIME email message containing:
 
