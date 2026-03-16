@@ -37,6 +37,7 @@ The goals of this project are:
 
 ---
 
+
 # Requirements and Dependencies
 
 ## Hardware Requirements
@@ -60,7 +61,6 @@ The goals of this project are:
 ---
 
 # System Architecture
-
 The system consists of three major components: the embedded drawing device, cloud services, and the user interface.
 
 1. The CC3200 connects to Wi-Fi and initializes the drawing system.
@@ -70,8 +70,7 @@ The system consists of three major components: the embedded drawing device, clou
 5. When the user saves the drawing, the device uploads the image to AWS S3.
 6. A Lambda function processes the upload and sends the image to the user via email.
 
-*(Insert architecture diagram here)*
-
+![System Architecture Diagram](./system_architecture_diagram_final.png "a title")
 ---
 
 # Drawing Implementation
@@ -88,6 +87,8 @@ Supported drawing operations include:
 - Bucket fill
 
 Each drawing operation updates the framebuffer and then refreshes the OLED display.
+
+![Functional Specifiication Diagram](./functional_specification_diagram_final.png "a title")
 
 ---
 
