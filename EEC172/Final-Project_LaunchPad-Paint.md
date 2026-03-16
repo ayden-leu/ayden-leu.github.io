@@ -1,15 +1,15 @@
 # Final Project – LaunchPad Paint
 
-- [Final Project – LaunchPad Paint](#final-project--launchpad-paint)
 - [Overview](#overview)
 - [Project Objectives](#project-objectives)
 - [Requirements and Dependencies](#requirements-and-dependencies)
   - [Hardware Requirements](#hardware-requirements)
   - [Software Requirements](#software-requirements)
 - [System Architecture](#system-architecture)
-- [Drawing Implementation](#drawing-implementation)
-- [User Interface](#user-interface)
-- [Save Image to Cloud Storage](#save-image-to-cloud-storage)
+- [Functional Specification](#functional-specification)
+- [Part I: Drawing Implementation](#part-i--drawing-implementation)
+- [Part II: User Interface](#part-ii--user-interface)
+- [Part III: Save Image to Cloud Storage](#part-iii--save-image-to-cloud-storage)
 - [Video Demonstration](#video-demonstration)
 - [Reproducibility](#reproducibility)
 - [Future Work](#future-work)
@@ -72,8 +72,21 @@ The system consists of three major components: the embedded drawing device, clou
 
 ![System Architecture Diagram](./system_architecture_diagram_final.png "a title")
 ---
+# Functional Specification
 
-# Drawing Implementation
+The functional specification describes the workflow of the drawing system, including initialization, user interaction, drawing operations, and cloud image upload.
+
+1. When the program starts, the CC3200 initializes board configurations, GPIO pins, SPI, OLED display, SysTick, and UART.
+2. The system creates the canvas buffer, renders the UI, draws the initial canvas, and connects to Wi-Fi.
+3. The program enters the main loop and continuously waits for input from the IR remote controller.
+4. When a button is pressed, the IR signal is decoded and the system determines which drawing feature to execute.
+5. The system updates the cursor position, drawing tool, color, or canvas state, and then re-renders the canvas and cursor on the OLED display.
+6. If the save function is triggered, the canvas buffer is converted to image data and uploaded to cloud storage using a pre-signed URL obtained from AWS.
+
+*(Insert diagram here)*
+
+
+# Part I: Drawing Implementation
 
 The drawing system maintains a framebuffer representing the canvas. Each pixel is stored in RGB565 format and rendered to the OLED display.
 
@@ -92,7 +105,7 @@ Each drawing operation updates the framebuffer and then refreshes the OLED displ
 
 ---
 
-# User Interface
+# Part II: User Interface
 
 The system uses a TV remote as the primary input device.
 
@@ -113,7 +126,7 @@ Example button mappings:
 
 ---
 
-# Save Image to Cloud Storage
+# Part III: Save Image to Cloud Storage
 
 When the user chooses to save a drawing:
 
