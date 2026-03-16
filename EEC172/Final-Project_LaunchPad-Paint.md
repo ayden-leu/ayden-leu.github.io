@@ -1,6 +1,13 @@
 # Final Project – LaunchPad Paint
 
-- [Overview](#overview)
+LaunchPad Paint is a real-time drawing program for the CC3200 LaunchPad.  On top of the board, it utilizes an IR receiver and TV remote for input, an Adafruit OLED screen to display everything, and Amazon AWS services to store images in the cloud as well as send the images to subscribers via email.
+
+This project demonstrates a complete IoT workflow that integrates embedded hardware interaction, graphical rendering, wireless networking, and cloud services.
+
+---
+
+- [Download](#download)
+- [Setup](#setup)
 - [Project Objectives](#project-objectives)
 - [Requirements and Dependencies](#requirements-and-dependencies)
   - [Hardware Requirements](#hardware-requirements)
@@ -16,11 +23,50 @@
 
 ---
 
-# Overview
+# Download [[Link]](./launchpad-paint_no-sensitive-info.zip)
+Be sure to unzip the file before using.
 
-This project implements a remote-controlled drawing system using the CC3200 microcontroller, an OLED display, an IR receiver, and AWS cloud services. The system allows a user to draw on a digital canvas using a standard TV remote and view the drawing in real time on the OLED display. Once the drawing is complete, the image can be uploaded to cloud storage and sent to the user via email.
+---
 
-The project demonstrates a complete IoT workflow that integrates embedded hardware interaction, graphical rendering, wireless networking, and cloud services.
+# Setup
+You will need the following hardware:
+1. A CC3200 LaunchPad.
+2. A TSOP31xxx IR Receiver
+3. A 100Ω resistor.
+4. A 100μF capacitor.
+5. An Adafruit 1.5" SSD1351 128x128 RGB OLED.
+6. An AT&T S10-S3 TV Remote + 2 AA batteries.
+7. A USB-to-Micro-USB cable.
+
+And the following software:
+1. Code Composer Studio v12.5.0
+2. CC3200 SDK Files
+3. (Optional) UniFlash v3.4.1
+
+Instructions for properly setting up this software can be found [here](https://tailailihe.github.io/UCDavis-EEC172-Lab-Manual/labs/lab-setup.html).
+
+To setup the hardware, connect everything according to the following table:
+
+| Pin From | Pin To |
+| -------- | ------ |
+| OLED SI  | CC3200 P2.6 |
+| OLED CL  | CC3200 P1.7 |
+| OLED DC  | CC3200 P1.5 |
+| OLED R   | CC3200 P2.4 |
+| OLED OC  | CC3200 P2.10 |
+| OLED +   | CC3200 VCC |
+| OLED G   | CC3200 GND |
+| IR Receiver GND | CC3200 GND |
+| IR Receiver Vs | 100𝜇 F Capacitor + 100Ω Resistor |
+| 100𝜇F Capacitor | CC3200 GND |
+| 100Ω Resistor | CC3200 VCC |
+| IR Receiver OUT | CC3200 P2.2 |
+
+Then plug in your CC3200 LaunchPad into your computer and open Code Composer Studio.  When asked to open a workspace, navigate to where you unzipped the file and select the `workspace` folder.  With the project loaded, right-click the project and enter its properties.  Then navigate to `Resource > Linked Resources`.  Here, change the value of the `CC3200_SDK_ROOT` to where yourr CC3200 SDK files are located.
+
+Next open up `wirelss_comm.h`.  Here, you'll need to replace all fields in the angle brackets `< >` with the appropriate values corresponding to your AWS services, as well as update the date and time stored in the macros below it.  To create the needed AWS services to run the saving functionality of this proogram, please refer to sections `3.1.4`, `3.1.6`, `3.1.10`, and `3.1.11` in [this project report](./EEC172_Final-Project_Report.pdf).
+
+Finally, open up `commmon.h` (hold ctrl and click the include statement that references it) and update `SSID_NAME`, `SECURITY_TYPE`, and `SECURITY_KEY` with your Wi-Fi network's configuration.  This connection must have a 2.4 GHz band.  If you have trouble connecting to it with a password, try no password.
 
 ---
 
