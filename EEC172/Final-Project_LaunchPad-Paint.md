@@ -7,29 +7,44 @@ This project demonstrates a complete IoT workflow that integrates embedded hardw
 ---
 
 - [Download](#download)
-- [Setup](#setup)
 - [Project Objectives](#project-objectives)
 - [Requirements and Dependencies](#requirements-and-dependencies)
   - [Hardware Requirements](#hardware-requirements)
   - [Software Requirements](#software-requirements)
+- [Setup](#setup)
 - [System Architecture](#system-architecture)
 - [Functional Specification](#functional-specification)
-- [Part I: Drawing Implementation](#part-i--drawing-implementation)
-- [Part II: User Interface](#part-ii--user-interface)
-- [Part III: Save Image to Cloud Storage](#part-iii--save-image-to-cloud-storage)
+- [Part I: Drawing Implementation](#part-i-drawing-implementation)
+- [Part II: User Interface](#part-ii-user-interface)
+- [Part III: Save Image to Cloud Storage](#part-iii-save-image-to-cloud-storage)
 - [Video Demonstration](#video-demonstration)
 - [Future Work](#future-work)
 - [Bill of Materials](#bill-of-materials)
 
 ---
 
-# Download [[Link]](./launchpad-paint_no-sensitive-info.zip)
+# Download
+[[Link]](./launchpad-paint_no-sensitive-info.zip)
 Be sure to unzip the file before using.
 
 ---
 
-# Setup
-You will need the following hardware:
+# Project Objectives
+
+The goals of this project are:
+
+- Implement a remote-controlled drawing interface
+- Display drawing output on an OLED screen
+- Support multiple drawing tools (pixel, line, rectangle, ellipse, fill)
+- Upload saved drawings to cloud storage
+- Send saved drawings to a user through email
+
+---
+
+# Requirements and Dependencies
+
+## Hardware Requirements
+
 1. A CC3200 LaunchPad.
 2. A TSOP31xxx IR Receiver
 3. A 100Ω resistor.
@@ -38,11 +53,18 @@ You will need the following hardware:
 6. An AT&T S10-S3 TV Remote + 2 AA batteries.
 7. A USB-to-Micro-USB cable.
 
-And the following software:
+## Software Requirements
+
 1. Code Composer Studio v12.5.0
 2. CC3200 SDK Files
 3. (Optional) UniFlash v3.4.1
+4. AWS Lambda
+5. Amazon S3
+6. Amazon SES
 
+---
+
+# Setup
 Instructions for properly setting up this software can be found [here](https://tailailihe.github.io/UCDavis-EEC172-Lab-Manual/labs/lab-setup.html).
 
 To setup the hardware, connect everything according to the following table:
@@ -67,41 +89,6 @@ Then plug in your CC3200 LaunchPad into your computer and open Code Composer Stu
 Next open up `wirelss_comm.h`.  Here, you'll need to replace all fields in the angle brackets `< >` with the appropriate values corresponding to your AWS services, as well as update the date and time stored in the macros below it.  To create the needed AWS services to run the saving functionality of this proogram, please refer to sections `3.1.4`, `3.1.6`, `3.1.10`, and `3.1.11` in [this project report](./EEC172_Final-Project_Report.pdf).
 
 Finally, open up `commmon.h` (hold ctrl and click the include statement that references it) and update `SSID_NAME`, `SECURITY_TYPE`, and `SECURITY_KEY` with your Wi-Fi network's configuration.  This connection must have a 2.4 GHz band.  If you have trouble connecting to it with a password, try no password.
-
----
-
-# Project Objectives
-
-The goals of this project are:
-
-- Implement a remote-controlled drawing interface
-- Display drawing output on an OLED screen
-- Support multiple drawing tools (pixel, line, rectangle, ellipse, fill)
-- Upload saved drawings to cloud storage
-- Send saved drawings to a user through email
-
----
-
-
-# Requirements and Dependencies
-
-## Hardware Requirements
-
-- SimpleLink CC3200 LaunchPad
-- OLED display (SPI interface)
-- IR receiver module
-- TV remote controller
-- Breadboard and jumper wires
-- Micro-USB cable
-
-## Software Requirements
-
-- Code Composer Studio (CCS)
-- CC3200 SDK
-- AWS IoT Services
-- AWS Lambda
-- Amazon S3
-- Amazon SES
 
 ---
 
@@ -327,15 +314,16 @@ Several improvements could be made in future versions of the project:
 
 # Bill of Materials
 
-| Component | Purpose |
-|------|------|
-| CC3200 Microcontroller | Core processing and Wi-Fi connectivity |
-| SPI OLED Display | Display drawing canvas |
-| IR Receiver | Receive remote control signals |
-| AT&T S10-S3 Remote | User input device |
-| AWS IoT Services | Cloud communication |
-| Amazon S3 | Image storage |
-| AWS Lambda | Cloud processing |
-| Amazon SES | Email notification service |
+| Component | Amount | Price | Purpose |
+|------|------|-----|-----|
+| CC3200 LaunchPad | 1 | Free (lab material) | Core processing and Wi-Fi connectivity |
+| USB-A-to-Micro-USB Cable | 1 | Free (lab material) | Connects CC3200 LaunchPad to computer | 
+| SPI OLED Display | 1 | Free (lab material) | Display drawing canvas |
+| IR Receiver | 1 | Free (lab material) | Receive remote control signals |
+| AT&T S10-S3 Remote | 1 | Free (lab material) | User input device |
+| AA Batteries | 2 | Free (lab material) | Powers AT&T S10-S3 Remote |
+| Amazon S3 Bucket | 1 | Free (image storage is small)  | Image storage |
+| AWS Lambda Function | 2 | Free (image size is small) | Cloud processing |
+| Amazon SES | 1? | Free (email size is small) | Sending emails to subscribers |
 
 ---
