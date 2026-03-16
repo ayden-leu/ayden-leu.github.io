@@ -129,7 +129,7 @@ Example button mappings:
 
 This system allows the user to save the generated drawing to the cloud and automatically receive the image through email. The process integrates the CC3200 device with several AWS services including API Gateway, Lambda, Amazon S3, and Amazon SES.
 
-### Step 1: Request a Pre-Signed Upload URL
+#### Step 1: Request a Pre-Signed Upload URL
 
 When the user selects the save function, the CC3200 first prepares the canvas image for upload by converting the framebuffer into a `.bmp` image.
 
@@ -137,9 +137,7 @@ The device then establishes a secure TLS connection to the AWS API Gateway endpo
 
 Once the Lambda function returns the response, the device extracts the upload URL from the JSON response.
 
----
-
-### Step 2: Upload Image to Amazon S3
+#### Step 2: Upload Image to Amazon S3
 
 After receiving the pre-signed URL, the CC3200 sends an HTTP **PUT request** to upload the generated `.bmp` image file to the S3 bucket.
 
@@ -152,25 +150,22 @@ The request includes:
 
 Once the PUT request completes successfully, the image is stored in the Amazon S3 bucket.
 
----
 
-### Step 3: Trigger S3 Event Notification
+#### Step 3: Trigger S3 Event Notification
 
 The S3 bucket is configured with an **event notification** that triggers whenever a new file is uploaded.
 
 When the drawing image is saved in the bucket, Amazon S3 automatically emits a **PutObject event**, which invokes a second AWS Lambda function. This Lambda function receives the event information, including the bucket name and file key of the uploaded image.
 
----
 
-### Step 4: Retrieve the Image from S3
+#### Step 4: Retrieve the Image from S3
 
 The Lambda function processes the event by extracting the uploaded file information. It then retrieves the image file from the S3 bucket using the AWS SDK.
 
 The downloaded image data is converted into a binary buffer so it can be attached to an email.
 
----
 
-### Step 5: Send Image to the User via Email
+#### Step 5: Send Image to the User via Email
 
 The final step uses **Amazon SES (Simple Email Service)** to send the drawing image to the user.
 
