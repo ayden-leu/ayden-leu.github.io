@@ -142,58 +142,76 @@ Button Mappings:
 
 # Part III: Save Image to Cloud Storage
 
-This system allows the user to save the generated drawing to the cloud and automatically receive the image through email. The process integrates the CC3200 device with several AWS services including API Gateway, Lambda, Amazon S3, and Amazon SES.
+This part describes how the system uploads the generated drawing to cloud storage and sends the saved image to the user through email. The process uses AWS API Gateway, AWS Lambda, Amazon S3, and Amazon SES.
 
-#### Step 1: Request a Pre-Signed Upload URL
+#### Step 1: Prepare the Image Data
 
-When the user selects the save function, the CC3200 first prepares the canvas image for upload by converting the framebuffer into a `.bmp` image. 
+When the user triggers the save function, the drawing stored in the device's framebuffer is converted into a `.bmp` image file. This image data will later be uploaded to cloud storage.
 
-The device then establishes a secure TLS connection to the AWS API Gateway endpoint using HTTPS (port 443). After the connection is created, the device sends an HTTP **GET request** to a Lambda function through the API Gateway. The Lambda function generates a **pre-signed URL** that allows the device to upload a file directly to the S3 bucket without exposing credentials. 
+#### Step 2: Connect to AWS API Gateway
 
-Once the Lambda function returns the response, the device extracts the upload URL from the JSON response.
+The device must establish a secure connection with AWS in order to request permission to upload the image.
 
-#### Step 2: Upload Image to Amazon S3
+1. Determine the API Gateway endpoint in the format  
+   `<id>.execute-api.<region>.amazonaws.com`.
+2. Open a TLS connection to this server using port **443**, the standard HTTPS port.
+3. Once the secure connection is established, the device can communicate with the Lambda service through API Gateway.
 
-After receiving the pre-signed URL, the CC3200 sends an HTTP **PUT request** to upload the generated `.bmp` image file to the S3 bucket.
+#### Step 3: Request a Pre-signed Upload URL
 
-The request includes:
+Instead of directly uploading files with AWS credentials, the system requests a **pre-signed upload URL** from a Lambda function.
 
-- The pre-signed URL endpoint
-- The content type (`image/bmp`)
-- The size of the image data
-- The binary image data generated from the canvas buffer
+1. Send an HTTP **GET request** to the Lambda endpoint through API Gateway.
+2. The Lambda function generates a temporary upload URL that allows the device to upload a file directly to the S3 bucket.
+3. The Lambda function returns a JSON response containing:
+   - the **pre-signed upload URL**
+   - the **file key** that will identify the stored image.
 
-Once the PUT request completes successfully, the image is stored in the Amazon S3 bucket.
+#### Step 4: Extract the Upload URL
 
+After receiving the server response:
 
-#### Step 3: Trigger S3 Event Notification
+1. The device processes the returned JSON message.
+2. The program extracts the **upload URL** from the response.
+3. This URL will be used as the destination for the image upload.
 
-The S3 bucket is configured with an **event notification** that triggers whenever a new file is uploaded.
+#### Step 5: Upload the Image to Amazon S3
 
-When the drawing image is saved in the bucket, Amazon S3 automatically emits a **PutObject event**, which invokes a second AWS Lambda function. This Lambda function receives the event information, including the bucket name and file key of the uploaded image.
+Using the pre-signed URL, the device uploads the generated BMP image to the S3 bucket.
 
+1. Determine the S3 host endpoint in the format  
+   `<bucket-name>.s3.<region>.amazonaws.com`.
+2. Create a secure TLS connection to the S3 server on port **443**.
+3. Send an HTTP **PUT request** to the pre-signed URL.
+4. Include the BMP image data as the payload of the request.
+5. After the request completes successfully, the image is stored in the S3 bucket.
 
-#### Step 4: Retrieve the Image from S3
+#### Step 6: Trigger an S3 Event
 
-The Lambda function processes the event by extracting the uploaded file information. It then retrieves the image file from the S3 bucket using the AWS SDK.
+Once the image is uploaded:
 
-The downloaded image data is converted into a binary buffer so it can be attached to an email.
+1. The S3 bucket is configured with an **event notification rule**.
+2. When a new object is uploaded to the bucket, the bucket automatically emits an event.
+3. This event triggers a second AWS Lambda function that handles post-processing.
 
+#### Step 7: Process the Uploaded Image
 
-#### Step 5: Send Image to the User via Email
+The triggered Lambda function performs the following tasks:
 
-Uses **Amazon SES (Simple Email Service)** to send the drawing image to the user.
+1. Extract information from the S3 event, including:
+   - the bucket name
+   - the uploaded file name
+2. Retrieve the uploaded image file from the S3 bucket.
+3. Convert the file into a usable data buffer.
 
-The Lambda function constructs a raw MIME email message containing:
+#### Step 8: Send the Image by Email
 
-- The sender email address
-- The recipient email address
-- The email subject and message body
-- The uploaded drawing image as an attachment
+The Lambda function then sends the uploaded image to the user through Amazon SES.
 
-The image is encoded into **Base64 format** so it can be included in the email attachment.
-
-After the email message is created, the Lambda function sends it using the SES API. The user then receives the generated drawing image as an email attachment.
+1. Configure verified email identities in **Amazon SES**.
+2. The Lambda function constructs an email message with the image attached.
+3. The email is sent using the **SendRawEmail** command through SES.
+4. The user receives the drawing image as an email attachment.
 
 ---
 
