@@ -84,7 +84,7 @@ The functional specification describes the workflow of the drawing system, inclu
 6. If the save function is triggered, the canvas buffer is converted to image data and uploaded to cloud storage using a pre-signed URL obtained from AWS.
 7. 
 
-<img src="./functional_specification_diagram_final.png" width="70%" alt="System Architecture Diagram">
+<img src="./functional_specification_diagram_final.png" width="80%" alt="System Architecture Diagram">
 
 # Part I: Drawing Implementation
 
