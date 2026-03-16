@@ -11,7 +11,6 @@
 - [Part II: User Interface](#part-ii--user-interface)
 - [Part III: Save Image to Cloud Storage](#part-iii--save-image-to-cloud-storage)
 - [Video Demonstration](#video-demonstration)
-- [Reproducibility](#reproducibility)
 - [Future Work](#future-work)
 - [Bill of Materials](#bill-of-materials)
 
