@@ -1,5 +1,5 @@
 # ayden-leu.github.io
 My GitHub site for school stuff.
 
-# LaunchPad Paint:  a EEC172 Final Project
-[Text-to-display](EEC172_Final-Project.md)
+# LaunchPad Paint:  an EEC172 Final Project
+[LaunchPad-Paint](./EEC172/Final-Project_LaunchPad-Paint.md)
