@@ -88,7 +88,7 @@ The functional specification describes the workflow of the drawing system, inclu
 
 # Part I: Drawing Implementation
 
-The drawing system is responsible for managing the canvas, processing user input, and rendering graphical elements on the OLED display. The implementation focuses on maintaining a consistent drawing state and updating the screen based on user actions.
+The drawing system was developed using the code from **Lab 4** as the base template. Lab 4 already contains the TV remote input handling and text interface functionality, which allows the CC3200 to receive and decode button commands from the IR remote. Building on this foundation, the drawing features were integrated into the existing framework. The new implementation adds canvas management, cursor control, and drawing tools while reusing the remote input system to control drawing operations.
 
 ### Framebuffer and Canvas Management
 
@@ -121,9 +121,9 @@ The bucket fill tool allows users to quickly color a connected region of the can
 
 # Part II: User Interface
 
-The system uses a TV remote as the primary input device.
+The user interface is built on the IR remote decoding implemented in **Lab 3**. The decoded signals from the TV remote are reused to map each button to a specific system function. By assigning different commands to the remote buttons, users can control cursor movement, switch drawing tools, change colors, apply drawing actions, and manage the canvas directly through the remote controller.
 
-Example button mappings:
+Button Mappings:
 
 | Button | Function |
 |------|------|
@@ -209,19 +209,6 @@ The following video demonstrates the major features of the system:
 - Receiving the drawing via email
 
 <video src="./launchpad-paint_demo_faster.mp4" width="490" height="270" controls></video>
-
----
-
-# Reproducibility
-
-To reproduce this project:
-
-1. Connect the hardware components according to the wiring diagram.
-2. Install CCS and the CC3200 SDK.
-3. Configure the Wi-Fi credentials in the project source code.
-4. Set up AWS services including S3, Lambda, and API Gateway.
-5. Build and flash the program onto the CC3200 LaunchPad.
-6. Power the system and begin drawing using the remote.
 
 ---
 
