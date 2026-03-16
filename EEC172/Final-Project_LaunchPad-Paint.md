@@ -186,52 +186,39 @@ Button mappings:
 
 ## Visual
 
-<img src=./ui_preview.png width=50%>
+<img src="./ui_preview.png" width="50%">
 
 The top left is the name of the program.  The text in this preview image is different from the final program because we do not know what font the text drawing function uses.  The top right is the Wi-Fi indicator, which shows if the device is connected to a wireless access point or not.  On the left are all available tools the user can choose from.  Tools with similar functions are grouped together.  On the right are all program functions the user can run.  In the center is the main canvas the user can draw on.  It is green in the preview image instead of white to better show the drawable area.  Near the bottom right corner of the canvas is the point indicator, which becomes solid if a point has been set by one of the tools.  Unimplemented tools and program functions have a gray background.
 
 ### Tools
 
-<img src=./icons/pencil.png width=24px>
-Pencil: Draws a single pixel in the user's selected color.
+<img src="./icons/pencil.png" width="24px"> Pencil: Draws a single pixel in the user's selected color.
 
-<img src=./icons/eraser.png width=24px>
-Eraser: Erases a single pixel and replaces it with the background color.
+<img src="./icons/eraser.png" width="24px"> Eraser: Erases a single pixel and replaces it with the background color.
 
-<img src=./icons/gyro.png width=24px>
-(Not implemented) Gyro: Spawns a ball that makes all pixels under it the user's selected color.  The ball can be moved by tilting the CC33200 LaunchPad.
+<img src="./icons/gyro.png" width="24px"> (Not implemented) Gyro: Spawns a ball that makes all pixels under it the user's selected color.  The ball can be moved by tilting the CC33200 LaunchPad.
 
-<img src=./icons/square.png width=24px>
-Rectangle: Draws a hollow rectangle of the user's selected color between a previously selected point and the cursor's position.
+<img src="./icons/square.png" width="24px"> Rectangle: Draws a hollow rectangle of the user's selected color between a previously selected point and the cursor's position.
 
-<img src=./icons/square_filled.png width=24px>
-Filled Rectangle: Draws a filled rectangle of the user's selected color between a previously selected point and the cursor's position.
+<img src="./icons/square_filled.png" width="24px"> Filled Rectangle: Draws a filled rectangle of the user's selected color between a previously selected point and the cursor's position.
 
-<img src=./icons/circle.png width=24px>
-Ellipse: Draws a hollow ellipse of the user's selected color between a previously selected point and the cursor's position.
+<img src="./icons/circle.png" width="24px"> Ellipse: Draws a hollow ellipse of the user's selected color between a previously selected point and the cursor's position.
 
-<img src=./icons/circle_filled.png width=24px>
-Filled Ellipse: Draws a filled ellipse of the user's selected color between a previously selected point and the cursor's position.
+<img src="./icons/circle_filled.png" width="24px"> Filled Ellipse: Draws a filled ellipse of the user's selected color between a previously selected point and the cursor's position.
 
-<img src=./icons/line.png width=24px>
-Line: Draws a line of the user's selected color between a previously selected point and the cursor's position.
+<img src="./icons/line.png" width="24px"> Line: Draws a line of the user's selected color between a previously selected point and the cursor's position.
 
-<img src=./icons/polygon.png width=24px>
-(Not implemented) Polygon: Draws a polygon of the user's selected color based on several points selected by the user.
+<img src="./icons/polygon.png" width="24px"> (Not implemented) Polygon: Draws a polygon of the user's selected color based on several points selected by the user.
 
-<img src=./icons/bucket.png width=24px>
-Bucket: Fills an area with the user's selected color.
+<img src="./icons/bucket.png" width="24px"> Bucket: Fills an area with the user's selected color.
 
 ### Program Functions
 
-<img src=./icons/save.png width=24px>
-Save: Convert the drawing on the canvas into a `.bmp`, save it to cloud storage, and email it subscribers.
+<img src="./icons/save.png" width="24px"> Save: Convert the drawing on the canvas into a `.bmp`, save it to cloud storage, and email it subscribers.
 
-<img src=./icons/wifi.png width=24px>
-(Not implemented) Wi-Fi: Switch which wireless access point the device is connected to.
+<img src="./icons/wifi.png" width="24px"> (Not implemented) Wi-Fi: Switch which wireless access point the device is connected to.
 
-<img src=./icons/login.png width=24px>
-(Not implemented) Login: Login into a registered account.
+<img src="./icons/login.png" width="24px"> (Not implemented) Login: Login into a registered account.
 
 ---
 
