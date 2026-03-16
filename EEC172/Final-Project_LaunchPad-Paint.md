@@ -67,7 +67,7 @@ The system consists of three major components: the embedded drawing device, clou
 3. The CC3200 decodes the input and performs drawing operations on a framebuffer.
 4. The framebuffer is rendered on the OLED display.
 5. When the user saves the drawing, the device uploads the image to AWS S3.
-6. A Lambda function processes the upload and sends the image to the user via email.
+6. A Lambda function is setup to listen for any changes to the AWS S3 Bucket's storage and sends any modified `.bmp` files to subscribers via email.
 
 <img src="./system_architecture_diagram_final.png" width="60%" alt="System Architecture Diagram">
 
@@ -81,7 +81,6 @@ The functional specification describes the workflow of the drawing system, inclu
 4. When a button is pressed, the IR signal is decoded and the system determines which drawing feature to execute.
 5. The system updates the cursor position, drawing tool, color, or canvas state, and then re-renders the canvas and cursor on the OLED display.
 6. If the save function is triggered, the canvas buffer is converted to image data and uploaded to cloud storage using a pre-signed URL obtained from AWS.
-7. 
 
 <img src="./functional_specification_diagram_final.png" width="80%" alt="System Architecture Diagram">
 
@@ -120,22 +119,60 @@ The bucket fill tool allows users to quickly color a connected region of the can
 
 # Part II: User Interface
 
-The user interface is built on the IR remote decoding implemented in **Lab 3**. The decoded signals from the TV remote are reused to map each button to a specific system function. By assigning different commands to the remote buttons, users can control cursor movement, switch drawing tools, change colors, apply drawing actions, and manage the canvas directly through the remote controller.
+## Physical
 
-Button Mappings:
+The system uses a TV remote as the primary input device.
+
+Button mappings:
 
 | Button | Function |
 |------|------|
 | Vol Up / Down | Change drawing tool |
-| Ch Up / Down | Change tool mode |
 | Mute | Change color |
-| Last | Confirm operation |
+| Ch Up / Down | Change program function to run |
+| Last | Run program function |
 | 2 | Move cursor up |
 | 4 | Move cursor left |
 | 6 | Move cursor right |
 | 8 | Move cursor down |
-| 5 | Apply drawing action |
+| 5 | Use currently select tool |
 | 0 | Clear canvas |
+
+## Visual
+
+<img src=./ui_preview.png width=50%>
+
+The top left is the name of the program.  The text in this preview image is different from the final program because we do not know what font the text drawing function uses.  The top right is the Wi-Fi indicator, which shows if the device is connected to a wireless access point or not.  On the left are all available tools the user can choose from.  Tools with similar functions are grouped together.  On the right are all program functions the user can run.  In the center is the main canvas the user can draw on.  It is green in the preview image instead of white to better show the drawable area.  Near the bottom right corner of the canvas is the point indicator, which becomes solid if a point has been set by one of the tools.  Unimplemented tools and program functions have a gray background.
+
+### Tools
+
+<img src=./icons/pencil.png width=24px> Pencil: Draws a single pixel in the user's selected color.
+
+<img src=./icons/eraser.png width=24px> Eraser: Erases a single pixel and replaces it with the background color.
+
+<img src=./icons/gyro.png width=24px> (Not implemented) Gyro: Spawns a ball that makes all pixels under it the user's selected color.  The ball can be moved by tilting the CC33200 LaunchPad.
+
+<img src=./icons/square.png width=24px> Rectangle: Draws a hollow rectangle of the user's selected color between a previously selected point and the cursor's position.
+
+<img src=./icons/square_filled.png width=24px> Filled Rectangle: Draws a filled rectangle of the user's selected color between a previously selected point and the cursor's position.
+
+<img src=./icons/circle.png width=24px> Ellipse: Draws a hollow ellipse of the user's selected color between a previously selected point and the cursor's position.
+
+<img src=./icons/circle_filled.png width=24px> Filled Ellipse: Draws a filled ellipse of the user's selected color between a previously selected point and the cursor's position.
+
+<img src=./icons/line.png width=24px> Line: Draws a line of the user's selected color between a previously selected point and the cursor's position.
+
+<img src=./icons/polygon.png width=24px> (Not implemented) Polygon: Draws a polygon of the user's selected color based on several points selected by the user.
+
+<img src=./icons/bucket.png width=24px> Bucket: Fills an area with the user's selected color.
+
+### Program Functions
+
+<img src=./icons/save.png width=24px> Save: Convert the drawing on the canvas into a `.bmp`, save it to cloud storage, and email it subscribers.
+
+<img src=./icons/wifi.png width=24px> (Not implemented) Wi-Fi: Switch which wireless access point the device is connected to.
+
+<img src=./icons/login.png width=24px> (Not implemented) Login: Login into a registered account.
 
 ---
 
