@@ -82,8 +82,10 @@ The functional specification describes the workflow of the drawing system, inclu
 4. When a button is pressed, the IR signal is decoded and the system determines which drawing feature to execute.
 5. The system updates the cursor position, drawing tool, color, or canvas state, and then re-renders the canvas and cursor on the OLED display.
 6. If the save function is triggered, the canvas buffer is converted to image data and uploaded to cloud storage using a pre-signed URL obtained from AWS.
+7. 
+![Functional Specifiication Diagram](./functional_specification_diagram_final.png "a title")
+---
 
-*(Insert diagram here)*
 
 
 # Part I: Drawing Implementation
@@ -101,9 +103,8 @@ Supported drawing operations include:
 
 Each drawing operation updates the framebuffer and then refreshes the OLED display.
 
-![Functional Specifiication Diagram](./functional_specification_diagram_final.png "a title")
 
----
+
 
 # Part II: User Interface
 
